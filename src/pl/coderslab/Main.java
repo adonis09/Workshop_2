@@ -7,9 +7,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        App app = new App();
-
-        Connection connection = app.getConnection();
+        Connection connection = DbConnection.getConnection();
 
         if (!connection.equals(null)){
             System.out.println("Connection works!");
