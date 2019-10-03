@@ -7,11 +7,13 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    private int userGroupId;
 
-    public User(String userName, String email, String password) {
+    public User(String userName, String email, String password, int userGroupId) {
         this.userName = userName;
         this.email = email;
         this.hashPassword(password);
+        this.userGroupId = userGroupId;
     }
 
     public User() {}
@@ -52,4 +54,11 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    public int getUserGroupId() {
+        return userGroupId;
+    }
+
+    public void setUserGroupId(int userGroupId) {
+        this.userGroupId = userGroupId;
+    }
 }
