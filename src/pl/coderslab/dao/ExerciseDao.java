@@ -6,7 +6,7 @@ import pl.coderslab.model.Exercise;
 import java.sql.*;
 import java.util.Arrays;
 
-public class ExercideDao {
+public class ExerciseDao {
 
     private static final String CREATE_EXERCISE_QUERY =
             "INSERT INTO exercise(title, description) VALUES (?, ?)";
