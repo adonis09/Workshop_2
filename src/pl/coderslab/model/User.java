@@ -61,4 +61,9 @@ public class User {
     public void setUserGroupId(int userGroupId) {
         this.userGroupId = userGroupId;
     }
+
+    @Override
+    public String toString() {
+        return "id: " + this.id + " | username: " + this.userName + " | email: " + this.email + " | group: " + this.userGroupId;
+    }
 }
