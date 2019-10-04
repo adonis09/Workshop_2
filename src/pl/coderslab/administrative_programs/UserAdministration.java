@@ -35,6 +35,7 @@ public class UserAdministration {
                     System.out.println("You are going to delete a user.");
                 }else if (input.equals("quit")) {
                     System.out.println("You are quitting the program.");
+                    break;
                 }else{
                     System.out.println("Please make sure your input matches one of the options. Try again.");
                 }
