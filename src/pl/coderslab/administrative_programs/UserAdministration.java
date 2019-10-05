@@ -35,6 +35,8 @@ public class UserAdministration {
                     introMenu();
                 } else if (input.equals("delete")) {
                     System.out.println("You are going to delete a user.");
+                    deleteUser();
+                    introMenu();
                 } else if (input.equals("quit")) {
                     System.out.println("You are quitting the program.");
                     break;
@@ -178,6 +180,39 @@ public class UserAdministration {
         editUser.setId(editUserIdInt);
         userDao.update(editUser);
         System.out.println("You have successfully edited a user with id: " + editUser.getId() + ":\n" + editUser + "\n");
+
+    }
+
+    protected static void deleteUser() {
+
+        UserDao userDao = new UserDao();
+        System.out.println("Please type in the id of the user you wish to remove and press ENTER.");
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+
+        int idToDelete = 0;
+
+        while (!input.equals(null)) {
+
+            if (isInteger(input)) {
+
+                while (userDao.read(Integer.parseInt(input)) == (null)) {
+                    System.out.println("There is no user with the id you selected (" + input + "). Try again.");
+                    input = scan.nextLine();
+                }
+
+
+                idToDelete = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("User's id must be an integer. Try again.");
+                input = scan.nextLine();
+            }
+        }
+
+        User userToDelete = userDao.read(idToDelete);
+        userDao.delete(idToDelete);
+        System.out.println("The following user has been successfully removed from the databse:\n" + userToDelete + "\n");
 
     }
 
