@@ -129,19 +129,11 @@ public class UserAdministration {
         String input = scan.nextLine();
 
         while (!input.equals(null)) {
-
-            if (isInteger(input)) {
-
-                while (userDao.read(Integer.parseInt(input)) == (null)) {
-                    System.out.println("There is no user with the id you selected (" + input + "). Try again.");
-                    input = scan.nextLine();
-                }
-
-
+            if (isInteger(input) && isIdOfExistingUser(Integer.parseInt(input))) {
                 editUserIdInt = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("User's id must be an integer. Try again.");
+                System.out.println("User's id must be an integer representing an id of an existing user. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -193,19 +185,11 @@ public class UserAdministration {
         int idToDelete = 0;
 
         while (!input.equals(null)) {
-
-            if (isInteger(input)) {
-
-                while (userDao.read(Integer.parseInt(input)) == (null)) {
-                    System.out.println("There is no user with the id you selected (" + input + "). Try again.");
-                    input = scan.nextLine();
-                }
-
-
+            if (isInteger(input) && isIdOfExistingUser(Integer.parseInt(input))) {
                 idToDelete = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("User's id must be an integer. Try again.");
+                System.out.println("User's id must be an integer representing an id of an existing user. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -223,6 +207,16 @@ public class UserAdministration {
             return false;
         }
         return true;
+    }
+
+    static boolean isIdOfExistingUser(int userId) {
+        UserDao userDao = new UserDao();
+        if (userDao.read(userId) == null) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
 }
