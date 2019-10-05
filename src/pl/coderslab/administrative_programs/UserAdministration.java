@@ -31,12 +31,14 @@ public class UserAdministration {
                     introMenu();
                 } else if (input.equals("edit")) {
                     System.out.println("You are going to edit a user.");
+                    editUser();
+                    introMenu();
                 } else if (input.equals("delete")) {
                     System.out.println("You are going to delete a user.");
-                }else if (input.equals("quit")) {
+                } else if (input.equals("quit")) {
                     System.out.println("You are quitting the program.");
                     break;
-                }else{
+                } else {
                     System.out.println("Please make sure your input matches one of the options. Try again.");
                 }
                 input = scan.nextLine();
@@ -48,7 +50,7 @@ public class UserAdministration {
 
     }
 
-    protected static void introMenu(){
+    protected static void introMenu() {
         System.out.println("All users:");
         UserDao userDao = new UserDao();
         User[] allUsers = userDao.findAll();
@@ -66,7 +68,7 @@ public class UserAdministration {
         );
     }
 
-    protected static void addNewUser(){
+    protected static void addNewUser() {
         String newUserName;
         String newUserEmail;
         String newUserPassword;
@@ -91,7 +93,7 @@ public class UserAdministration {
         System.out.println("Please type in new user's group's id and press ENTER");
         input = scan.nextLine();
 
-        while(!input.equals(null)) {
+        while (!input.equals(null)) {
             if (isInteger(input)) {
                 newUserGroupIdInt = Integer.parseInt(input);
                 break;
@@ -106,6 +108,76 @@ public class UserAdministration {
         UserDao userDao = new UserDao();
         userDao.create(newUser);
         System.out.println("The following user has been added to the database:\n" + newUser + "\n");
+
+    }
+
+    protected static void editUser() {
+
+        String editUserName;
+        String editUserEmail;
+        String editUserPassword;
+        int editUserGroupIdInt = 0;
+        int editUserIdInt = 0;
+
+        UserDao userDao = new UserDao();
+
+        System.out.println("Plese type in the id of the user you wish to edit and press ENTER");
+
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+
+        while (!input.equals(null)) {
+
+            if (isInteger(input)) {
+
+                while (userDao.read(Integer.parseInt(input)) == (null)) {
+                    System.out.println("There is no user with the id you selected (" + input + "). Try again.");
+                    input = scan.nextLine();
+                }
+
+
+                editUserIdInt = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("User's id must be an integer. Try again.");
+                input = scan.nextLine();
+            }
+        }
+
+        System.out.println("You are going to edit the following user:\n" + userDao.read(editUserIdInt));
+
+        System.out.println("Please type in new name of the selected user and press ENTER");
+
+        input = scan.nextLine();
+        editUserName = input;
+
+        System.out.println("Please type in new email of the selected user and press ENTER");
+        input = scan.nextLine();
+        editUserEmail = input;
+
+
+        System.out.println("Please type in new password of the selected user and press ENTER");
+        input = scan.nextLine();
+        editUserPassword = input;
+
+
+        System.out.println("Please type in new user's group's id of the selected user and press ENTER");
+        input = scan.nextLine();
+
+        while (!input.equals(null)) {
+            if (isInteger(input)) {
+                editUserGroupIdInt = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("User's group's id must be an integer. Try again.");
+                input = scan.nextLine();
+            }
+        }
+
+        User editUser = new User(editUserName, editUserEmail, editUserPassword, editUserGroupIdInt);
+        editUser.setId(editUserIdInt);
+        userDao.update(editUser);
+        System.out.println("You have successfully edited a user with id: " + editUser.getId() + ":\n" + editUser + "\n");
 
     }
 
