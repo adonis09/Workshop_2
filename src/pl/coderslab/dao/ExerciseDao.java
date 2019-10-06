@@ -42,8 +42,7 @@ public class ExerciseDao {
             PreparedStatement statement =
                     conn.prepareStatement(READ_EXERCISE_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, exerciseId);
-            statement.executeQuery();
-            ResultSet resultSet = statement.getGeneratedKeys();
+            ResultSet resultSet = statement.executeQuery();;
             if (resultSet.next()) {
                 Exercise exercise = new Exercise();
                 exercise.setId(resultSet.getInt("id"));
