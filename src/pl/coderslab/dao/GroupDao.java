@@ -41,8 +41,7 @@ public class GroupDao {
             PreparedStatement statement =
                     conn.prepareStatement(READ_GROUP_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, groupId);
-            statement.executeQuery();
-            ResultSet resultSet = statement.getGeneratedKeys();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Group group = new Group();
                 group.setId(resultSet.getInt("id"));
