@@ -43,7 +43,7 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return "id: " + this.id + " | title: " + this.title + " | desctiption: " + this.description;
+        return "id: " + this.id + " | title: " + this.title + "\n desctiption: " + this.description;
 
     }
 }
