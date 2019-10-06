@@ -90,7 +90,7 @@ public class GroupDao {
             while (resultSet.next()) {
                 Group group = new Group();
                 group.setId(resultSet.getInt("id"));
-                group.setName(resultSet.getString("username"));
+                group.setName(resultSet.getString("name"));
                 groups = addToArray(group, groups);
             }
             return groups;
