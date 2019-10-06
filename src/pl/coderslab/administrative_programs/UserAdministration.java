@@ -1,6 +1,7 @@
 package pl.coderslab.administrative_programs;
 
 import pl.coderslab.DbConnection;
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.User;
 
@@ -96,11 +97,11 @@ public class UserAdministration {
         input = scan.nextLine();
 
         while (!input.equals(null)) {
-            if (isInteger(input)) {
+            if (isInteger(input) && isIdOfExistingGroup(Integer.parseInt(input))) {
                 newUserGroupIdInt = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("New user's group's id must be an integer. Try again.");
+                System.out.println("New user's group's id must be an integer representing the id of an existing group. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -133,7 +134,7 @@ public class UserAdministration {
                 editUserIdInt = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("User's id must be an integer representing an id of an existing user. Try again.");
+                System.out.println("User's id must be an integer representing the id of an existing user. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -159,11 +160,11 @@ public class UserAdministration {
         input = scan.nextLine();
 
         while (!input.equals(null)) {
-            if (isInteger(input)) {
+            if (isInteger(input) && isIdOfExistingGroup(Integer.parseInt(input))) {
                 editUserGroupIdInt = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("User's group's id must be an integer. Try again.");
+                System.out.println("User's group's id must be an integer representing the id of an existing group. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -189,7 +190,7 @@ public class UserAdministration {
                 idToDelete = Integer.parseInt(input);
                 break;
             } else {
-                System.out.println("User's id must be an integer representing an id of an existing user. Try again.");
+                System.out.println("User's id must be an integer representing the id of an existing user. Try again.");
                 input = scan.nextLine();
             }
         }
@@ -212,6 +213,16 @@ public class UserAdministration {
     static boolean isIdOfExistingUser(int userId) {
         UserDao userDao = new UserDao();
         if (userDao.read(userId) == null) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    static boolean isIdOfExistingGroup(int groupId) {
+        GroupDao groupDao = new GroupDao();
+        if (groupDao.read(groupId) == null) {
             return false;
         } else {
             return true;
