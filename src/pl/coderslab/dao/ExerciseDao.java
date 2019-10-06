@@ -13,7 +13,7 @@ public class ExerciseDao {
     private static final String READ_EXERCISE_QUERY =
             "SELECT * FROM exercise where id = ?";
     private static final String UPDATE_EXERCISE_QUERY =
-            "UPDATE exercise SET title = ?, description = ?, where id = ?";
+            "UPDATE exercise SET title = ?, description = ? where id = ?";
     private static final String DELETE_EXERCISE_QUERY =
             "DELETE FROM exercise WHERE id = ?";
     private static final String FIND_ALL_EXERCISES_QUERY =
