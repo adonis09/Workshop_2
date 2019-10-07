@@ -146,7 +146,7 @@ public class SolutionDao {
     public Solution[] findAllByExerciseId(int exerciseId) {
         try (Connection conn = DbConnection.getConnection()) {
             Solution[] solutions = new Solution[0];
-            PreparedStatement statement = conn.prepareStatement(FIND_ALL_SOLUTIONS_BY_USER_ID_QUERY);
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_SOLUTIONS_BY_EXERCISE_ID_QUERY);
             statement.setInt(1, exerciseId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
