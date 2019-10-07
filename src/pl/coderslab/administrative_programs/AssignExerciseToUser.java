@@ -49,6 +49,7 @@ public class AssignExerciseToUser {
                 }
                 input = scan.nextLine();
             }
+            scan.close();
         }else{
             System.out.println("Connection failed.");
         }
@@ -64,14 +65,9 @@ public class AssignExerciseToUser {
     }
 
     static void addExerciseToUser(){
-        UserDao userDao = new UserDao();
-        User[] allUsers = userDao.findAll();
-        System.out.println("All users:");
-        for (User oneUser : allUsers) {
-            System.out.println(oneUser);
-        }
-
+        printAllUsers();
         System.out.println("Please type in the id of the user you wish to assign exercise to and press ENTER.");
+        UserDao userDao = new UserDao();
         int pickedUserId = 0;
         int pickedExerciseId = 0;
         Scanner scan = new Scanner(System.in);
@@ -117,8 +113,23 @@ public class AssignExerciseToUser {
 
     }
 
-    static void viewSubmitedSolutions(){
+    static void viewSubmitedSolutions() throws NullPointerException{
+        printAllUsers();
+        System.out.println("Please type in the id of the user whose solutions you wish to view and press ENTER.");
+        int pickedUserId = 0;
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        while (!input.equals(null)) {
+            if (isInteger(input) && isIdOfExistingUser(Integer.parseInt(input))) {
+                pickedUserId = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("User's id must be an integer representing the id of an existing user. Try again.");
+                input = scan.nextLine();
+            }
+        }
 
+        printAllSolutionsSubmittedByUser(pickedUserId);
     }
 
     static String generateSqlDate(){
@@ -126,6 +137,31 @@ public class AssignExerciseToUser {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = simpleDateFormat.format(date);
         return dateString;
+    }
+
+    static void printAllUsers(){
+        UserDao userDao = new UserDao();
+        User[] allUsers = userDao.findAll();
+        System.out.println("All users:");
+        for (User oneUser : allUsers) {
+            System.out.println(oneUser);
+        }
+    }
+
+    static void printAllSolutionsSubmittedByUser(int userId){
+        SolutionDao solutionDao = new SolutionDao();
+        Solution[] allUsersSolutions = solutionDao.findAllByUserId(userId);
+        int submittedSolutionsCounter = 0;
+        for (Solution oneSolution : allUsersSolutions) {
+            if(oneSolution.getUpdated() != null){
+                submittedSolutionsCounter++;
+                System.out.println(oneSolution);
+            }
+        }
+        if(submittedSolutionsCounter == 0){
+            System.out.println("It seems that the user you selected have not submitted any solutions yet.\n");
+        }
+
     }
 
 }
