@@ -68,7 +68,7 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "id: " + this.id + " | exercise id + " + this.exerciseId + " | user id + " + this.userId +
+        return "id: " + this.id + " | exercise id: " + this.exerciseId + " | user id: " + this.userId +
                 "\ncreated: " + this.created + "\nupdated: " + this.updated + "\ndescription: " + this.description;
     }
 }

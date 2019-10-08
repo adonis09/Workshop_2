@@ -49,8 +49,8 @@ public class SolutionDao {
             PreparedStatement statement =
                     conn.prepareStatement(READ_SOLUTION_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, solutionId);
-            statement.executeQuery();
-            ResultSet resultSet = statement.getGeneratedKeys();
+
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Solution solution = new Solution();
                 solution.setId(resultSet.getInt("id"));
@@ -93,9 +93,9 @@ public class SolutionDao {
     }
 
     private Solution[] addToArray(Solution e, Solution[] solutions) {
-        Solution[] Solutions = Arrays.copyOf(solutions, solutions.length + 1);
-        Solutions[solutions.length] = e;
-        return Solutions;
+        Solution[] tmpSolutions = Arrays.copyOf(solutions, solutions.length + 1);
+        solutions[tmpSolutions.length] = e;
+        return tmpSolutions;
     }
 
     public Solution[] findAll() {
