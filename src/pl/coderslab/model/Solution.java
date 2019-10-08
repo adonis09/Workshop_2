@@ -65,4 +65,10 @@ public class Solution {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "id: " + this.id + " | exercise id + " + this.exerciseId + " | user id + " + this.userId +
+                "\ncreated: " + this.created + "\nupdated: " + this.updated + "\ndescription: " + this.description;
+    }
 }
