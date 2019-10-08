@@ -11,9 +11,9 @@ public class SolutionDao {
     private static final String CREATE_SOLUTION_QUERY =
             "INSERT INTO solution(created, updated, description, exercise_id, user_id) VALUES (?, ?, ?, ?, ?)";
     private static final String READ_SOLUTION_QUERY =
-            "SELECT * FROM solution where id = ?";
+            "SELECT * FROM solution WHERE id = ?";
     private static final String UPDATE_SOLUTION_QUERY =
-            "UPDATE solution SET created = ?, updated = ?, description = ?, exerciseId = ?, userId = ?, where id = ?";
+            "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, user_id = ? WHERE id = ?";
     private static final String DELETE_SOLUTION_QUERY =
             "DELETE FROM solution WHERE id = ?";
     private static final String FIND_ALL_SOLUTIONS_QUERY =
@@ -94,7 +94,7 @@ public class SolutionDao {
 
     private Solution[] addToArray(Solution e, Solution[] solutions) {
         Solution[] tmpSolutions = Arrays.copyOf(solutions, solutions.length + 1);
-        solutions[tmpSolutions.length] = e;
+        tmpSolutions[solutions.length] = e;
         return tmpSolutions;
     }
 
