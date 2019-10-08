@@ -17,7 +17,7 @@ public class SubmitSolution {
 
     public static void main(String[] args) throws SQLException {
 
-        int userId = 3;
+        int userId = 1;
 
         /*int userId = 0;
 
