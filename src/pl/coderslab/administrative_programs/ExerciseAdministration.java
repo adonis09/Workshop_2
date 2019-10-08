@@ -1,57 +1,44 @@
 package pl.coderslab.administrative_programs;
 
-import pl.coderslab.DbConnection;
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.model.Exercise;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import static pl.coderslab.administrative_programs.UserAdministration.isInteger;
 
 public class ExerciseAdministration {
 
-    public static void main(String[] args) throws SQLException {
-
-        Connection connection = DbConnection.getConnection();
+    public static void main(String[] args) {
 
         System.out.println("Welcome to programming school exercise administration program.");
 
-        if (!connection.equals(null)) {
-            System.out.println("Database connection established.");
+        introMenu();
 
-            introMenu();
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
 
-            Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine();
-
-            while (!input.equals(null)) {
-                if (input.equals("add")) {
-                    System.out.println("You are going to add a new exercise.");
-                    addNewExercise();
-                    introMenu();
-                } else if (input.equals("edit")) {
-                    System.out.println("You are going to edit a exercise.");
-                    editExercise();
-                    introMenu();
-                } else if (input.equals("delete")) {
-                    System.out.println("You are going to delete a exercise.");
-                    deleteExercise();
-                    introMenu();
-                } else if (input.equals("quit")) {
-                    System.out.println("You are quitting the program.");
-                    break;
-                } else {
-                    System.out.println("Please make sure your input matches one of the options. Try again.");
-                }
-                input = scan.nextLine();
+        while (!input.equals(null)) {
+            if (input.equals("add")) {
+                System.out.println("You are going to add a new exercise.");
+                addNewExercise();
+                introMenu();
+            } else if (input.equals("edit")) {
+                System.out.println("You are going to edit a exercise.");
+                editExercise();
+                introMenu();
+            } else if (input.equals("delete")) {
+                System.out.println("You are going to delete a exercise.");
+                deleteExercise();
+                introMenu();
+            } else if (input.equals("quit")) {
+                System.out.println("You are quitting the program.");
+                break;
+            } else {
+                System.out.println("Please make sure your input matches one of the options. Try again.");
             }
-
-        } else {
-            System.out.println("Connection failed.");
+            input = scan.nextLine();
         }
-
     }
 
     protected static void introMenu() {
@@ -68,8 +55,7 @@ public class ExerciseAdministration {
                 " - \'edit\' - to edit an existing exercise\n" +
                 " - \'delete\' - to delete an exercise\n" +
                 " - \'quit\' - to end the program\n" +
-                "and press ENTER."
-        );
+                "and press ENTER.");
     }
 
     protected static void addNewExercise() {
@@ -91,7 +77,6 @@ public class ExerciseAdministration {
         ExerciseDao exerciseDao = new ExerciseDao();
         exerciseDao.create(newExercise);
         System.out.println("The following exercise has been added to the database:\n" + newExercise + "\n");
-
     }
 
     protected static void editExercise() {
@@ -132,7 +117,6 @@ public class ExerciseAdministration {
         editExercise.setId(editExerciseIdInt);
         exerciseDao.update(editExercise);
         System.out.println("You have successfully edited a exercise with id: " + editExercise.getId() + ":\n" + editExercise + "\n");
-
     }
 
     protected static void deleteExercise() {
@@ -157,7 +141,6 @@ public class ExerciseAdministration {
         Exercise exerciseToDelete = exerciseDao.read(idToDelete);
         exerciseDao.delete(idToDelete);
         System.out.println("The following exercise has been successfully removed from the databse:\n" + exerciseToDelete + "\n");
-
     }
 
     static boolean isIdOfExistingExercise(int exerciseId) {
@@ -167,7 +150,5 @@ public class ExerciseAdministration {
         } else {
             return true;
         }
-
     }
-
 }

@@ -1,56 +1,43 @@
 package pl.coderslab.administrative_programs;
 
-import pl.coderslab.DbConnection;
 import pl.coderslab.dao.GroupDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.User;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserAdministration {
 
-    public static void main(String[] args) throws SQLException {
-
-        Connection connection = DbConnection.getConnection();
+    public static void main(String[] args) {
 
         System.out.println("Welcome to programming school user administration program.");
 
-        if (!connection.equals(null)) {
-            System.out.println("Database connection established.");
+        introMenu();
 
-            introMenu();
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
 
-            Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine();
-
-            while (!input.equals(null)) {
-                if (input.equals("add")) {
-                    System.out.println("You are going to add a new user.");
-                    addNewUser();
-                    introMenu();
-                } else if (input.equals("edit")) {
-                    System.out.println("You are going to edit a user.");
-                    editUser();
-                    introMenu();
-                } else if (input.equals("delete")) {
-                    System.out.println("You are going to delete a user.");
-                    deleteUser();
-                    introMenu();
-                } else if (input.equals("quit")) {
-                    System.out.println("You are quitting the program.");
-                    break;
-                } else {
-                    System.out.println("Please make sure your input matches one of the options. Try again.");
-                }
-                input = scan.nextLine();
+        while (!input.equals(null)) {
+            if (input.equals("add")) {
+                System.out.println("You are going to add a new user.");
+                addNewUser();
+                introMenu();
+            } else if (input.equals("edit")) {
+                System.out.println("You are going to edit a user.");
+                editUser();
+                introMenu();
+            } else if (input.equals("delete")) {
+                System.out.println("You are going to delete a user.");
+                deleteUser();
+                introMenu();
+            } else if (input.equals("quit")) {
+                System.out.println("You are quitting the program.");
+                break;
+            } else {
+                System.out.println("Please make sure your input matches one of the options. Try again.");
             }
-
-        } else {
-            System.out.println("Connection failed.");
+            input = scan.nextLine();
         }
-
     }
 
     protected static void introMenu() {
@@ -67,8 +54,7 @@ public class UserAdministration {
                 " - \'edit\' - to edit an existing user\n" +
                 " - \'delete\' - to delete a user\n" +
                 " - \'quit\' - to end the program\n" +
-                "and press ENTER."
-        );
+                "and press ENTER.");
     }
 
     protected static void addNewUser() {
@@ -111,7 +97,6 @@ public class UserAdministration {
         UserDao userDao = new UserDao();
         userDao.create(newUser);
         System.out.println("The following user has been added to the database:\n" + newUser + "\n");
-
     }
 
     protected static void editUser() {
@@ -173,7 +158,6 @@ public class UserAdministration {
         editUser.setId(editUserIdInt);
         userDao.update(editUser);
         System.out.println("You have successfully edited a user with id: " + editUser.getId() + ":\n" + editUser + "\n");
-
     }
 
     protected static void deleteUser() {
@@ -198,7 +182,6 @@ public class UserAdministration {
         User userToDelete = userDao.read(idToDelete);
         userDao.delete(idToDelete);
         System.out.println("The following user has been successfully removed from the databse:\n" + userToDelete + "\n");
-
     }
 
     public static boolean isInteger(String s) {
@@ -217,7 +200,6 @@ public class UserAdministration {
         } else {
             return true;
         }
-
     }
 
     static boolean isIdOfExistingGroup(int groupId) {
@@ -227,7 +209,5 @@ public class UserAdministration {
         } else {
             return true;
         }
-
     }
-
 }

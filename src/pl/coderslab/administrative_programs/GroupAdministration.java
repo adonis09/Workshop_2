@@ -1,56 +1,44 @@
 package pl.coderslab.administrative_programs;
 
-import pl.coderslab.DbConnection;
 import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import static pl.coderslab.administrative_programs.UserAdministration.isInteger;
 
 public class GroupAdministration {
-    public static void main(String[] args) throws SQLException {
 
-        Connection connection = DbConnection.getConnection();
+    public static void main(String[] args) {
 
         System.out.println("Welcome to programming school group administration program.");
 
-        if (!connection.equals(null)) {
-            System.out.println("Database connection established.");
+        introMenu();
 
-            introMenu();
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
 
-            Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine();
-
-            while (!input.equals(null)) {
-                if (input.equals("add")) {
-                    System.out.println("You are going to add a new group.");
-                    addNewGroup();
-                    introMenu();
-                } else if (input.equals("edit")) {
-                    System.out.println("You are going to edit a group.");
-                    editGroup();
-                    introMenu();
-                } else if (input.equals("delete")) {
-                    System.out.println("You are going to delete a group.");
-                    deleteGroup();
-                    introMenu();
-                } else if (input.equals("quit")) {
-                    System.out.println("You are quitting the program.");
-                    break;
-                } else {
-                    System.out.println("Please make sure your input matches one of the options. Try again.");
-                }
-                input = scan.nextLine();
+        while (!input.equals(null)) {
+            if (input.equals("add")) {
+                System.out.println("You are going to add a new group.");
+                addNewGroup();
+                introMenu();
+            } else if (input.equals("edit")) {
+                System.out.println("You are going to edit a group.");
+                editGroup();
+                introMenu();
+            } else if (input.equals("delete")) {
+                System.out.println("You are going to delete a group.");
+                deleteGroup();
+                introMenu();
+            } else if (input.equals("quit")) {
+                System.out.println("You are quitting the program.");
+                break;
+            } else {
+                System.out.println("Please make sure your input matches one of the options. Try again.");
             }
-
-        } else {
-            System.out.println("Connection failed.");
+            input = scan.nextLine();
         }
-
     }
 
     protected static void introMenu() {
@@ -67,8 +55,7 @@ public class GroupAdministration {
                 " - \'edit\' - to edit an existing group\n" +
                 " - \'delete\' - to delete an group\n" +
                 " - \'quit\' - to end the program\n" +
-                "and press ENTER."
-        );
+                "and press ENTER.");
     }
 
     protected static void addNewGroup() {
@@ -86,7 +73,6 @@ public class GroupAdministration {
         GroupDao groupDao = new GroupDao();
         groupDao.create(newGroup);
         System.out.println("The following group has been added to the database:\n" + newGroup + "\n");
-
     }
 
     protected static void editGroup() {
@@ -122,7 +108,6 @@ public class GroupAdministration {
         editGroup.setId(editGroupIdInt);
         groupDao.update(editGroup);
         System.out.println("You have successfully edited a group with id: " + editGroup.getId() + ":\n" + editGroup + "\n");
-
     }
 
     protected static void deleteGroup() {
@@ -147,7 +132,6 @@ public class GroupAdministration {
         Group groupToDelete = groupDao.read(idToDelete);
         groupDao.delete(idToDelete);
         System.out.println("The following group has been successfully removed from the databse:\n" + groupToDelete + "\n");
-
     }
 
     static boolean isIdOfExistingGroup(int groupId) {
@@ -157,6 +141,5 @@ public class GroupAdministration {
         } else {
             return true;
         }
-
     }
 }

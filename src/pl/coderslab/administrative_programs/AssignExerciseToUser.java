@@ -1,6 +1,5 @@
 package pl.coderslab.administrative_programs;
 
-import pl.coderslab.DbConnection;
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
@@ -8,8 +7,6 @@ import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -20,9 +17,7 @@ import static pl.coderslab.administrative_programs.UserAdministration.isInteger;
 
 public class AssignExerciseToUser {
 
-    public static void main(String[] args) throws SQLException {
-
-        Connection connection = DbConnection.getConnection();
+    public static void main(String[] args) {
 
         System.out.println("Welcome to programming school exercise assignment program.");
 
@@ -48,9 +43,7 @@ public class AssignExerciseToUser {
             input = scan.nextLine();
         }
         scan.close();
-
     }
-
 
     static void mainMenu() {
         System.out.println("In order to select an option, type in:\n" +
@@ -124,7 +117,6 @@ public class AssignExerciseToUser {
                 input = scan.nextLine();
             }
         }
-
         printAllSolutionsSubmittedByUser(pickedUserId);
     }
 
@@ -159,7 +151,5 @@ public class AssignExerciseToUser {
         if (submittedSolutionsCounter == 0) {
             System.out.println("It seems that the user you selected have not submitted any solutions yet.\n");
         }
-
     }
-
 }
