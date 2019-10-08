@@ -132,7 +132,7 @@ public class AssignExerciseToUser {
         printAllSolutionsSubmittedByUser(pickedUserId);
     }
 
-    static String generateSqlDate(){
+    public static String generateSqlDate(){
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = simpleDateFormat.format(date);
