@@ -17,15 +17,13 @@ public class SubmitSolution {
 
     public static void main(String[] args) throws SQLException {
 
-        int userId = 1;
-
-        /*int userId = 0;
+        int userId = 0;
 
         try {
             userId = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             System.err.println("Wrong startup parameter.");
-        }*/
+        }
 
         if (userId != 0) {
             System.out.println("Welcome to solution submitting program.");
