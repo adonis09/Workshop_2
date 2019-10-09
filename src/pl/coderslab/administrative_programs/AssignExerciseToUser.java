@@ -1,9 +1,11 @@
 package pl.coderslab.administrative_programs;
 
 import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Group;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
@@ -12,8 +14,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import static pl.coderslab.administrative_programs.ExerciseAdministration.isIdOfExistingExercise;
-import static pl.coderslab.administrative_programs.UserAdministration.isIdOfExistingUser;
-import static pl.coderslab.administrative_programs.UserAdministration.isInteger;
+import static pl.coderslab.administrative_programs.UserAdministration.*;
 
 public class AssignExerciseToUser {
 
@@ -26,9 +27,13 @@ public class AssignExerciseToUser {
         String input = scan.nextLine();
 
         while (!input.equals(null)) {
-            if (input.equals("add")) {
+            if (input.equals("addU")) {
                 System.out.println("You are going to assign exercises to a user.");
                 addExerciseToUser();
+                mainMenu();
+            } else if (input.equals("addG")) {
+                System.out.println("You are going to assign exercises to the whole group.");
+                addExerciseToGroup();
                 mainMenu();
             } else if (input.equals("view")) {
                 System.out.println("You are going to view solutions submitted by a user.");
@@ -47,7 +52,8 @@ public class AssignExerciseToUser {
 
     static void mainMenu() {
         System.out.println("In order to select an option, type in:\n" +
-                " - \'add\' - to assign exercises to a user\n" +
+                " - \'addU\' - to assign exercises to a user\n" +
+                " - \'addG\' - to assign exercises to the whole group\n" +
                 " - \'view\' - to view solutions submitted by a user\n" +
                 " - \'quit\' - to end the program\n" +
                 "and press ENTER.");
@@ -118,6 +124,62 @@ public class AssignExerciseToUser {
             }
         }
         printAllSolutionsSubmittedByUser(pickedUserId);
+    }
+
+    static void addExerciseToGroup(){
+        System.out.println("All groups:");
+        GroupDao groupDao = new GroupDao();
+        Group[] allGroups = groupDao.findAll();
+        for (Group oneGroup : allGroups) {
+            System.out.println(oneGroup);
+        }
+        System.out.println("Please type in the id of the group to members of which you wish to assign an exercise and press ENTER.");
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        int pickedGroupId = 0;
+
+        while (!input.equals(null)) {
+            if (isInteger(input) && isIdOfExistingGroup(Integer.parseInt(input))) {
+                pickedGroupId = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("Group id must be an integer representing the id of an existing group. Try again.");
+                input = scan.nextLine();
+            }
+        }
+        System.out.println("You selected the group:\n" + groupDao.read(pickedGroupId));
+        System.out.println("Available exercises:");
+        int pickedExerciseId = 0;
+        ExerciseDao exerciseDao = new ExerciseDao();
+        Exercise[] allExercises = exerciseDao.findAll();
+        for (Exercise oneExercise : allExercises) {
+            System.out.println(oneExercise);
+        }
+        System.out.println("Please type in the id of the exercise you wish to assign to the selected group and press ENTER.");
+        input = scan.nextLine();
+        while (!input.equals(null)) {
+            if (isInteger(input) && isIdOfExistingExercise(Integer.parseInt(input))) {
+                pickedExerciseId = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("Exercise id must be an integer representing the id of an existing exercise. Try again.");
+                input = scan.nextLine();
+            }
+        }
+        SolutionDao solutionDao = new SolutionDao();
+        UserDao userDao = new UserDao();
+        User[] groupUsers = userDao.findAllByGroupId(pickedGroupId);
+        for (User oneGroupUser : groupUsers) {
+            Solution solution = new Solution();
+            solution.setCreated(generateSqlDate());
+            solution.setExerciseId(pickedExerciseId);
+            solution.setUserId(oneGroupUser.getId());
+            solutionDao.create(solution);
+        }
+
+        System.out.println("You have successfully assigned exercise:\n " + exerciseDao.read(pickedExerciseId) +
+                "\nto group:\n" + groupDao.read(pickedGroupId));
+
     }
 
     public static String generateSqlDate() {
