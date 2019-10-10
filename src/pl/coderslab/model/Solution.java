@@ -5,6 +5,9 @@ public class Solution {
     private String created;
     private String updated;
     private String description;
+    private int mark;
+    private String commentary;
+
     private int exerciseId;
     private int userId;
 
@@ -66,9 +69,26 @@ public class Solution {
         this.userId = userId;
     }
 
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public String getCommentary() {
+        return commentary;
+    }
+
+    public void setCommentary(String comment) {
+        this.commentary = comment;
+    }
+
     @Override
     public String toString() {
         return "id: " + this.id + " | exercise id: " + this.exerciseId + " | user id: " + this.userId +
-                "\ncreated: " + this.created + "\nupdated: " + this.updated + "\ndescription: " + this.description;
+                "\ncreated: " + this.created + "\nupdated: " + this.updated + "\ndescription: " + this.description +
+                "\nmark: " + this.mark + "\ncomment: " + this.commentary;
     }
 }

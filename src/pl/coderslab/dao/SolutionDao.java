@@ -9,11 +9,11 @@ import java.util.Arrays;
 public class SolutionDao {
 
     private static final String CREATE_SOLUTION_QUERY =
-            "INSERT INTO solution(created, updated, description, exercise_id, user_id) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO solution(created, updated, description, mark, commentary, exercise_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String READ_SOLUTION_QUERY =
             "SELECT * FROM solution WHERE id = ?";
     private static final String UPDATE_SOLUTION_QUERY =
-            "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, user_id = ? WHERE id = ?";
+            "UPDATE solution SET created = ?, updated = ?, description = ?, mark = ?, commentary = ?, exercise_id = ?, user_id = ? WHERE id = ?";
     private static final String DELETE_SOLUTION_QUERY =
             "DELETE FROM solution WHERE id = ?";
     private static final String FIND_ALL_SOLUTIONS_QUERY =
@@ -30,8 +30,10 @@ public class SolutionDao {
             statement.setString(1, solution.getCreated());
             statement.setString(2, solution.getUpdated());
             statement.setString(3, solution.getDescription());
-            statement.setInt(4, solution.getExerciseId());
-            statement.setInt(5, solution.getUserId());
+            statement.setInt(4, solution.getMark());
+            statement.setString(5, solution.getCommentary());
+            statement.setInt(6, solution.getExerciseId());
+            statement.setInt(7, solution.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -57,6 +59,8 @@ public class SolutionDao {
                 solution.setCreated(resultSet.getString("created"));
                 solution.setUpdated(resultSet.getString("updated"));
                 solution.setDescription(resultSet.getString("description"));
+                solution.setMark(resultSet.getInt("mark"));
+                solution.setCommentary(resultSet.getString("commentary"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
                 return solution;
@@ -73,9 +77,11 @@ public class SolutionDao {
             statement.setString(1, solution.getCreated());
             statement.setString(2, solution.getUpdated());
             statement.setString(3, solution.getDescription());
-            statement.setInt(4, solution.getExerciseId());
-            statement.setInt(5, solution.getUserId());
-            statement.setInt(6, solution.getId());
+            statement.setInt(4, solution.getMark());
+            statement.setString(5, solution.getCommentary());
+            statement.setInt(6, solution.getExerciseId());
+            statement.setInt(7, solution.getUserId());
+            statement.setInt(8, solution.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,6 +115,8 @@ public class SolutionDao {
                 solution.setCreated(resultSet.getString("created"));
                 solution.setUpdated(resultSet.getString("updated"));
                 solution.setDescription(resultSet.getString("description"));
+                solution.setMark(resultSet.getInt("mark"));
+                solution.setCommentary(resultSet.getString("commentary"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
                 solutions = addToArray(solution, solutions);
@@ -132,6 +140,8 @@ public class SolutionDao {
                 solution.setCreated(resultSet.getString("created"));
                 solution.setUpdated(resultSet.getString("updated"));
                 solution.setDescription(resultSet.getString("description"));
+                solution.setMark(resultSet.getInt("mark"));
+                solution.setCommentary(resultSet.getString("commentary"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
                 solutions = addToArray(solution, solutions);
@@ -155,6 +165,8 @@ public class SolutionDao {
                 solution.setCreated(resultSet.getString("created"));
                 solution.setUpdated(resultSet.getString("updated"));
                 solution.setDescription(resultSet.getString("description"));
+                solution.setMark(resultSet.getInt("mark"));
+                solution.setCommentary(resultSet.getString("commentary"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
                 solutions = addToArray(solution, solutions);
